@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-framework="elm">
+
+<head>
+    <meta charset="utf-8">
+    <title>Elm • TodoMVC</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="app.js"></script>
+    <script>
+        (function () {
+            var result = localStorage.getItem('elm-todo-cache');
+            var savedModel = result ? JSON.parse(result) : null;
+            var todoApp = Elm.Main.init({
+                node: document.getElementById("app"),
+                flags: savedModel
+            })
+            todoApp.ports.cache.subscribe(function(data) {
+                localStorage.setItem('elm-todo-cache', JSON.stringify(data));
+            });
+        }());
+    </script>
+</body>
+
+</html>
